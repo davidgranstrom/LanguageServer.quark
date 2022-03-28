@@ -127,6 +127,13 @@ LSPConnection {
 	prParseMessage {
 		|message|
 		var object;
+		var startIndex;
+
+		// Remove Content-Header if present
+		if (message.size > 0 and:{message[0] == $C}) {
+			startIndex = message.find("{");
+			message = message[startIndex..];
+		};
 
 		try {
 			object = message.parseJSON;
